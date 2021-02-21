@@ -5,21 +5,11 @@
 
 #include <iostream>
 #include <vector>
-
-#include <boost/iterator/zip_iterator.hpp>
-#include <boost/fusion/algorithm/transformation/zip.hpp>
-#include <boost/fusion/include/zip.hpp>
-#include <boost/range.hpp>
-
-#include <boost/range/combine.hpp>
-#include <boost/foreach.hpp>
-
-
-#include <iterator>
+#include <algorithm>
 
 int main() {
-  std::vector<double> v1 = {1,2,3};
-  std::vector<double> v2 = {2,4,6};
+  std::vector<double> v1 = {1,2,3,10};
+  std::vector<double> v2 = {2,4,6,2};
   for(auto&& v : v1) {
     std::cout << v << ",";
   }
@@ -33,32 +23,16 @@ int main() {
 // разделить все элементы вектора v1 на элементы
 // вектора  v2 почленно.   
 //  for_each(...);
-//auto zip = std::zip( v1 , v2 );
-  //for( auto & [ v_1,  v_2] : zip( v1 , v2 )) {
-  //  std::cout << v_1  << v_2 << std::endl;
-  //for (auto && items : boost::fusion::zip ( v1 , v2 ))  {
-    //for (auto [v_1, v_2] : zip( v1 , v2 ) ) {
-    //for (auto zi : zip ( v1 , v2 ) ) {
-    for (auto const & i : boost::combine(v1 , v2) ) {
-      double v_1;
-      double v_2;
-      boost::tie(v_1,v_2) = i;
-      std::cout << v_1  << v_2 << std::endl;
-    }
-  }
-
 ////////////////////////////////////////////////  
-  /*
-  for(auto&& v : v1) {
-    std::cout << v << ",";
-  }
-  std::cout << "\n";
-  for(auto&& v : v2) {
-    std::cout << v << ",";
-  }
-  std::cout << "\n"; */
-} 
 
+//auto lamda = [] () {} 
+std::for_each (v1.begin(), v1.end(), [&v2, i = 0] ( double & val ) mutable { 
+    val = val / v2[i];
+    std::cout<< val << std::endl;
+    ++i;
+  });
+
+}
 /*
 И распечатать внутри for_each. Вывод:
 1,2,3,
@@ -68,4 +42,17 @@ int main() {
 3/=6
 0.5,0.5,0.5,
 2,4,6,
+*/
+
+
+/* 
+template<class InputIt, class UnaryFunction>
+constexpr UnaryFunction for_each(InputIt first, InputIt last, UnaryFunction f)
+{
+    for (; first != last; ++first) {
+        f(*first);
+    }
+    return f; // implicit move since C++11
+}
+
 */

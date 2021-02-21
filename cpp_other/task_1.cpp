@@ -53,7 +53,7 @@ int main(){
 
   /* измените код здесь */
   //size_t size = std::accumulate(...);
- size_t size = std::accumulate(m.begin(), m.end(),0 , [] (int acum, auto it  ) 
+ size_t size = std::accumulate(m.begin(), m.end(),0 , [] (size_t acum, auto it  ) 
  { return acum + it.second.points.size(); } );
 
 //size_t size = std::accumulate(m.begin(), m.end(),0 , [] ( ) {return acum + it->second.points.size(); } );
@@ -65,21 +65,27 @@ int main(){
 
 
 /*
-
-
-
 template<class InputIt, class T, class BinaryOperation>
-constexpr // since C++20
-T accumulate(InputIt first, InputIt last, T init, 
-             BinaryOperation op)
+T accumulate(InputIt first, InputIt last, T init, BinaryOperation op)
 {
     for (; first != last; ++first) {
-        init = op(std::move(init), *first); // std::move since C++20
-        int  = [](std::move(init), *first) {
-          first->
-        }
+        init = op(std::move(init), *first); 
     }
     return init;
 }
+
+whereas 
+
+auto labda = [] (size_t acum, auto it  ) { return acum + it.second.points.size(); }
+
+
+size_t  accumulate ( InputIt first, InputIt last, T init, lambda! )
+{
+  for(;first != last; ++first) {
+    ini =  labda( init , first );
+  }
+
+}
+
 */
 
