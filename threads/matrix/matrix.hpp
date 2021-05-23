@@ -23,6 +23,13 @@ public:
         }
         return element.at(row*col_count+col);
     }
+    void put (int row, int col, double value) {
+        if ( row > row_count || col > col_count) {
+            throw std::invalid_argument("invalid row or col");
+        }
+        element[row*col_count+col] = value;
+    }
+
     void read_in_line(double * arr, int row, int col) {
         row_count = row;
         col_count = col; 
@@ -43,6 +50,13 @@ public:
             }
             std::cout << std::endl;
         }
+    }
+    int getColCount () const noexcept {
+        return col_count;
+    }
+
+    int getRowCount () const noexcept {
+        return row_count;
     }
 
     ~Matrix();
